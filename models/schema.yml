@@ -1,0 +1,162 @@
+version: 2
+
+sources:
+  - name: ecommerce # required
+    description: "Ecommerce Tables"
+    database: DEMO_DB
+    schema: SOURCE_DATA
+
+
+    tables:
+      - name: customer #required
+        description: "customer table"
+        identifier: customer
+        columns:
+          - name: c_custkey
+            tests:
+              - unique
+              - not_null
+          - name: c_nationkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','nation')
+                  field: n_nationkey
+
+      - name: lineitem # declare properties of additional source tables
+        identifier: lineitem
+        columns:
+          - name: l_orderkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','orders')
+                  field: o_orderkey
+          - name: l_partkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','part')
+                  field: p_partkey
+          - name: l_suppkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','supplier')
+                  field: s_suppkey
+
+      - name: nation # declare properties of additional source tables
+        identifier: nation
+        columns:
+          - name: n_nationkey
+            tests:
+              - unique
+              - not_null
+          - name: n_regionkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','nation')
+                  field: n_nationkey
+
+      - name: orders # declare properties of additional source tables
+        identifier: orders
+        columns:
+          - name: o_orderkey
+            tests:
+              - unique
+              - not_null
+          - name: o_custkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','customer')
+                  field: c_custkey          
+
+      
+      - name: part # declare properties of additional source tables
+        identifier: part
+        columns:
+          - name: p_partkey
+            tests:
+              - unique
+              - not_null
+          
+      - name: partsupp # declare properties of additional source tables
+        identifier: partsupp
+        columns:
+          - name: ps_partkey
+            tests:
+              - relationships:
+                    to: source('ecommerce','part')
+                    field: p_partkey  
+
+          - name: ps_suppkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','supplier')
+                  field: s_suppkey
+
+          - name: ps_supplycost
+            tests:
+              - not_null
+
+      - name: region # declare properties of additional source tables
+        identifier: region
+        columns:
+          - name: r_regionkey
+            tests:
+              - unique
+              - not_null
+
+      - name: supplier # declare properties of additional source tables
+        identifier: supplier
+        columns:
+          - name: s_suppkey
+            tests:
+              - unique
+              - not_null
+          - name: s_nationkey
+            tests:
+              - relationships:
+                  to: source('ecommerce','nation')
+                  field: n_nationkey
+          - name: s_name
+            tests:
+              - not_null     
+
+      # - name: fact_table # declare properties of additional source tables
+      #   identifier: fact_table
+      #   columns:
+      #     - name: o_orderkey
+      #       tests:
+      #         - relationships:
+      #             to: source('ecommerce','orders')
+      #             field: o_orderkey  
+
+      
+      #     - name: o_custkey
+      #       tests:
+      #         - relationships:
+      #             to: source('ecommerce','customer')
+      #             field: c_custkey
+
+      #     - name: l_partkey
+      #       tests:
+      #         - relationships:
+      #             to: source('ecommerce','part')
+      #             field: p_partkey
+
+      #     - name: l_suppkey
+      #       tests:
+      #         - relationships:
+      #             to: source('ecommerce','supplier')
+      #             field: s_suppkey
+
+      #     - name: l_quantity
+      #       tests:
+      #         - not_null     
+
+
+
+
+
+
+         
+        
+
+
