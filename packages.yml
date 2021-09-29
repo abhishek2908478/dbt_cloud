@@ -1,8 +1,7 @@
 packages:
-  - package: fishtown-analytics/dbt_utils
-    version: 0.6.4
+  - git: "https://github.com/dbt-labs/dbt-utils.git" # git URL
+    revision: 0.1.21 # tag or branch name
 
-packages:
   - package: calogica/dbt_date
     version: [">=0.2.0", "<0.3.0"]
     # <see https://github.com/calogica/dbt-date/releases/latest> for the latest version tag
